@@ -10,7 +10,7 @@ import java.util.Map;
 public class BallWicketRunsMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     public static final String BALL_COUNTING_GROUP = "ballCounter";
-    private static final HashMap<Integer, String> INDEXES = new HashMap<>();
+    private static final HashMap<Integer, String> INDEXES = new HashMap();
 
     @Override
     public void map(Object key, Text value, Context context) {
@@ -21,7 +21,8 @@ public class BallWicketRunsMapper extends Mapper<Object, Text, Text, IntWritable
 
             //only effective for wickets taken and extra runs given OR
             //no runs scored
-            if((intVal > 0 && !e.getValue().equals("NO_RUNS_SCORED")) || (intVal == 0 && e.getValue().equals("NO_RUNS_SCORED"))) {
+            if((intVal > 0 && !e.getValue().equals("NO_RUNS_SCORED")) ||
+                    (intVal == 0 && e.getValue().equals("NO_RUNS_SCORED"))) {
                 context.getCounter(BALL_COUNTING_GROUP, e.getValue()).increment(1);
             }
         }

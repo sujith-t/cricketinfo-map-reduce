@@ -1,6 +1,7 @@
 package com.cricketinfo.driver;
 
 import com.cricketinfo.mapper.BallWicketRunsMapper;
+import com.cricketinfo.mapper.TotalWicketsPerTeamMapper;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.NullWritable;
@@ -12,7 +13,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
 import java.io.IOException;
 
-public class WicketRunsCount {
+public class TeamWicketsCount {
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
@@ -28,10 +29,10 @@ public class WicketRunsCount {
         Path input = new Path(otherArgs[0]);
         Path outputDir = new Path(otherArgs[1]);
 
-        Job job = Job.getInstance(conf, "Wicket Runs Count");
-        job.setJarByClass(WicketRunsCount.class);
+        Job job = Job.getInstance(conf, "Team Wicket Count");
+        job.setJarByClass(TeamWicketsCount.class);
 
-        job.setMapperClass(BallWicketRunsMapper.class);
+        job.setMapperClass(TotalWicketsPerTeamMapper.class);
         job.setNumReduceTasks(0);
 
         job.setOutputKeyClass(NullWritable.class);
@@ -43,7 +44,7 @@ public class WicketRunsCount {
         int code = job.waitForCompletion(true) ? 0 : 1;
 
         if (code == 0) {
-            for (Counter counter : job.getCounters().getGroup(BallWicketRunsMapper.BALL_COUNTING_GROUP)) {
+            for (Counter counter : job.getCounters().getGroup(TotalWicketsPerTeamMapper.WICKET_COUNTING_GROUP)) {
                 System.out.println(counter.getDisplayName() + "," + counter.getValue());
             }
         }

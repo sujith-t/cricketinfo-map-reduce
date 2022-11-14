@@ -8,10 +8,10 @@
     <artifactId>cricketinfo-map-reduce</artifactId>
     <version>0.1.0</version>
 
-    <properties>
+    <!--<properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    </properties>-->
 
     <dependencies>
         <!--<dependency>-->
